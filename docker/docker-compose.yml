@@ -1,0 +1,32 @@
+# Etapa 12 — Model Serving (vLLM / TGI / Ollama)
+# `chat-api` roda o assistente RAG. O serviço `llm-server` é opcional:
+# demonstra como um modelo open-source seria servido localmente via
+# Ollama (troca simples de provider em src/llm_client.py).
+services:
+  chat-api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+    restart: unless-stopped
+
+  # Descomente para servir um modelo open-source localmente:
+  # llm-server:
+  #   image: ollama/ollama:latest
+  #   ports:
+  #     - "11434:11434"
+  #   volumes:
+  #     - ollama_data:/root/.ollama
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - driver: nvidia
+  #             count: 1
+  #             capabilities: [gpu]
+
+# volumes:
+#   ollama_data:

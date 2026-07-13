@@ -1,0 +1,10 @@
+{"question": "Quantos dias tenho para pedir reembolso integral?", "expected_keywords": ["14 dias"], "expects_answer": true}
+{"question": "Qual o limite de armazenamento do plano Pro?", "expected_keywords": ["100 GB"], "expects_answer": true}
+{"question": "Qual o SLA de disponibilidade do plano Business?", "expected_keywords": ["99.9%"], "expects_answer": true}
+{"question": "Em quanto tempo um incidente de vazamento de dados deve ser comunicado?", "expected_keywords": ["72 horas"], "expects_answer": true}
+{"question": "Quantos usuários o plano Starter permite?", "expected_keywords": ["1"], "expects_answer": true}
+{"question": "Qual o tempo de resposta do suporte para o plano Pro?", "expected_keywords": ["4h"], "expects_answer": true}
+{"question": "Qual o percentual de multa em cancelamento de plano anual?", "expected_keywords": ["10%"], "expects_answer": true}
+{"question": "Qual o preço de uma pizza de calabresa?", "expected_keywords": [], "expects_answer": false}
+{"question": "Quem descobriu o Brasil?", "expected_keywords": [], "expects_answer": false}
+{"question": "Qual a capital da França?", "expected_keywords": [], "expects_answer": false}

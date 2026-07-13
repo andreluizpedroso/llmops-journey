@@ -1,0 +1,72 @@
+# Etapa 14 — CI/CD para Apps de LLM
+# Diferente de CI/CD tradicional, aqui existe um gate extra: qualidade
+# das respostas do RAG (answer coverage / hallucination rate), não só
+# testes unitários passando.
+
+name: CI/CD - LLM Support Assistant
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Testes unitários (guardrails, cache, API)
+        run: PYTHONPATH=. pytest tests/ -v
+      - name: Lint
+        run: pip install ruff && ruff check src/ api/ guardrails/ cache/
+
+  eval_gate:
+    needs: test
+    runs-on: ubuntu-latest
+    env:
+      MIN_ANSWER_COVERAGE: "0.80"
+      MAX_HALLUCINATION_RATE: "0.10"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Rodar avaliação do RAG
+        run: |
+          python - <<'EOF'
+          import sys, os
+          sys.path.append("eval")
+          from evaluate import evaluate
+
+          MIN_COVERAGE = float(os.environ["MIN_ANSWER_COVERAGE"])
+          MAX_HALLUCINATION = float(os.environ["MAX_HALLUCINATION_RATE"])
+
+          results = evaluate(prompt_version="v2")
+          print(f"Answer coverage: {results['answer_coverage']:.0%}")
+          print(f"Hallucination rate: {results['hallucination_rate']:.0%}")
+
+          failed = False
+          if results["answer_coverage"] < MIN_COVERAGE:
+              print(f"FALHOU: coverage {results['answer_coverage']:.0%} abaixo do mínimo {MIN_COVERAGE:.0%}")
+              failed = True
+          if results["hallucination_rate"] > MAX_HALLUCINATION:
+              print(f"FALHOU: hallucination {results['hallucination_rate']:.0%} acima do máximo {MAX_HALLUCINATION:.0%}")
+              failed = True
+          sys.exit(1 if failed else 0)
+          EOF
+
+  build_and_push:
+    needs: eval_gate
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build da imagem Docker
+        run: docker build -f docker/Dockerfile -t llm-support-api:${{ github.sha }} .
+      # Push + deploy real acionados manualmente após aprovação (ver k8s/)
