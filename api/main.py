@@ -6,7 +6,6 @@ as camadas construídas: guardrails de entrada -> cache -> RAG chain ->
 tracing -> resposta. Esta é a "porta de entrada" de produção do projeto.
 """
 import sys
-import time
 from contextlib import asynccontextmanager
 from pathlib import Path
 

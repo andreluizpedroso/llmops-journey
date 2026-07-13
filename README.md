@@ -1,5 +1,11 @@
 # LLMOps Journey — Assistente de Suporte com RAG
 
+[![CI/CD](https://github.com/andreluizpedroso/llmops-journey/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/andreluizpedroso/llmops-journey/actions/workflows/ci-cd.yml)
+![Python](https://img.shields.io/badge/python-3.12-blue?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+![Anthropic Claude](https://img.shields.io/badge/LLM-Anthropic%20Claude-D97757)
+
 Projeto de ponta a ponta construído seguindo as **20 etapas** do
 roadmap *"A Jornada de LLMOps"*. **Roda 100% offline, sem custo e sem
 chave de API** por padrão — usa um provider LLM mock local
