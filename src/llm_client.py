@@ -82,8 +82,8 @@ class MockLLMClient(LLMClient):
     def generate(self, system: str, user: str, max_tokens: int = 512) -> LLMResponse:
         start = time.perf_counter()
 
-        context_match = re.search(r"<context>(.*?)</context>", user, re.S)
-        question_match = re.search(r"<question>(.*?)</question>", user, re.S)
+        context_match = re.search(r"<context>(.*?)</context>", user, re.DOTALL)
+        question_match = re.search(r"<question>(.*?)</question>", user, re.DOTALL)
         context = context_match.group(1).strip() if context_match else ""
         question = question_match.group(1).strip() if question_match else user
 

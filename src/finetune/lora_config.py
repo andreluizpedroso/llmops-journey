@@ -32,7 +32,7 @@ def build_peft_config(cfg: LoRAConfig):
     """Constrói o LoraConfig real da lib `peft`. Só importa a lib
     quando a função é chamada — evita exigir GPU/peft instalados
     para rodar o resto do projeto."""
-    from peft import LoraConfig  # noqa: F401 (import tardio, ver docstring)
+    from peft import LoraConfig
 
     return LoraConfig(
         r=cfg.r,

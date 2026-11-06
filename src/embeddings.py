@@ -41,7 +41,7 @@ class Embedder:
     vectorizer: TfidfVectorizer
 
     @classmethod
-    def fit(cls, documents: list[str]) -> "Embedder":
+    def fit(cls, documents: list[str]) -> Embedder:
         vectorizer = TfidfVectorizer(
             lowercase=True,
             strip_accents="unicode",

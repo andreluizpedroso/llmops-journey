@@ -16,11 +16,12 @@ ROOT = Path(__file__).resolve().parents[1]
 for sub in ("src", "guardrails", "cache", "monitoring"):
     sys.path.append(str(ROOT / sub))
 
-from guardrails import check_output_safety, run_input_guardrails  # noqa: E402
-from indexer import build_index  # noqa: E402
-from rag_pipeline import RAGChain  # noqa: E402
-from semantic_cache import SemanticCache  # noqa: E402
-from tracing import Trace  # noqa: E402
+from semantic_cache import SemanticCache
+from tracing import Trace
+
+from guardrails import check_output_safety, run_input_guardrails
+from indexer import build_index
+from rag_pipeline import RAGChain
 
 _state: dict = {}
 

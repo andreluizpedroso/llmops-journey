@@ -23,7 +23,7 @@ jobs:
       - name: Testes unitários (guardrails, cache, API)
         run: PYTHONPATH=. pytest tests/ -v
       - name: Lint
-        run: pip install ruff && ruff check src/ api/ guardrails/ cache/
+        run: pip install ruff==0.16.9 && ruff check src/ api/ guardrails/ cache/
 
   eval_gate:
     needs: test
